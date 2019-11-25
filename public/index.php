@@ -1,40 +1,31 @@
+
 <?php
+
 require __DIR__ . '/../vendor/autoload.php';
 
-
-var_dump($_SERVER);
-use Alura\Cursos\Controller\ListarCursos;
 use Alura\Cursos\Controller\FormularioInsercao;
-switch  ($_SERVER['PATH_INFO']){
+use Alura\Cursos\Controller\InterfaceControladoraRequisicao;
+use Alura\Cursos\Controller\ListarCursos;
+use Alura\Cursos\Controller\Persistencia;
 
-    case '/listar-cursos':
-        //require 'listar-cursos.php';
-        $controlador = new ListarCursos();
-        $controlador->processaRequisicao();
-        break;
-    case '/novo-curso':
-        $controlador = new FormularioInsercao();
-        $controlador->processaRequisicao();
-        break;
-   
-    default:
-        echo "erro 404";
-        break;
-    
+$caminho = $_SERVER['PATH_INFO'];
+$rotas = require __DIR__ . '/../config/routes.php';
 
+if(!array_key_exists($caminho,$rotas)){
 
+    echo'echo 404';
+    exit();
 
 }
-/*if($_SERVER['PATH_INFO']==='/listar-cursos'){
 
-    require 'listar-cursos.php';
-}elseif($_SERVER['PATH_INFO']==='/novo-curso'){
-    require 'formulario-novo-curso.php';
-} 
-if($_SERVER['PATH_INFO']==='/sobre'){
-    require 'sobre.php';
+$classControladora = $rotas[$caminho];
 
-}
-*/
+$controlador  = new $classControladora();
 
-?>
+$controlador->processaRequisicao();
+
+
+
+
+
+
