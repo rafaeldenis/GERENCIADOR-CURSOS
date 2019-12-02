@@ -2,11 +2,15 @@
 
 namespace Alura\Cursos\Controller;
 
+use Alura\Cursos\Helper\RenderizadorDeHtmlTrait;
+
 class FormularioInsercao implements InterfaceControladorRequisicao
 {
+    use RenderizadorDeHtmlTrait;    
     public function processaRequisicao(): void
     {
-        $titulo = 'Novo curso';
-        require __DIR__ . '/../../view/cursos/formulario.php';
+        echo $this->renderizaHtml('cursos/formulario.php', [
+            'titulo' => 'Novo curso'
+        ]);
     }
 }

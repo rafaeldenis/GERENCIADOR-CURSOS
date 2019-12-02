@@ -3,10 +3,12 @@
 namespace Alura\Cursos\Controller;
 
 use Alura\Cursos\Entity\Curso;
+use Alura\Cursos\Helper\RenderizadorDeHtmlTrait;
 use Alura\Cursos\Infra\EntityManagerCreator;
 
 class ListarCursos implements InterfaceControladorRequisicao
 {
+    use RenderizadorDeHtmlTrait;
     private $repositorioDeCursos;
 
     public function __construct()
@@ -19,8 +21,9 @@ class ListarCursos implements InterfaceControladorRequisicao
 
     public function processaRequisicao(): void
     {
-        $cursos = $this->repositorioDeCursos->findAll();
-        $titulo = 'Lista de cursos';
-        require __DIR__ . '/../../view/cursos/listar-cursos.php';
+        echo $this->renderizaHtml('cursos/listar-cursos.php', [
+            'cursos' => $this->repositorioDeCursos->findAll(),
+            'titulo' => 'Lista de cursos',
+        ]);
     }
 }
